@@ -1,6 +1,19 @@
 version: "3"
 
 services:
+  # docker-compose.yml 파일이 밖에 있을 때 기준
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #   command: [ "npm", "start" ] 
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   # networks:
+  #   #   - 
+  #   volumes:
+  #     - ./frontend/:/frontend
+  #     - ./frontend/node_modules/:/frontend/node_modules
   backend:
     build: ./backend
     command: >
