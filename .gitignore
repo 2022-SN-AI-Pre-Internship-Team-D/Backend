@@ -9,5 +9,5 @@ db.sqlite3-journal
 media
 
 # Environments
-.env
-devenvs/mysqldb.env
+*.env
+/devenvs/mysqldb.env
