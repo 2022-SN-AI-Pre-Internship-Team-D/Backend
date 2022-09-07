@@ -10,3 +10,4 @@ media
 
 # Environments
 .env
+devenvs/mysqldb.env
