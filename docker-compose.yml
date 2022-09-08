@@ -1,7 +1,23 @@
 version: "3"
 
 services:
+  db:
+    container_name: mysqldb
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        MYSQL_USER: "teamd"
+        MYSQL_PASSWORD: "teamd"
+        MYSQL_DATABASE: "letterman"
+    command: # 명령어 실행(한글 인코딩 관련)
+     - --character-set-server=utf8mb4
+     - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysqldb:/var/lib/mysql
   backend:
+    container_name: django
     build: ./backend
     command: >
       bash -c "python3 manage.py makemigrations &&
@@ -11,5 +27,7 @@ services:
       - "8080:8080"
     volumes:
       - ./backend:/app
-#    depends_on:
-#      - mysqldb
+    # depends_on:
+    #   - mysqldb
+volumes:
+  mysqldb:
