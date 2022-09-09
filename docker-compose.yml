@@ -1,5 +1,8 @@
 version: "3"
 
+volumes:
+  mysql_data:
+
 services:
   # docker-compose.yml 파일이 밖에 있을 때 기준
   # frontend:
@@ -15,6 +18,24 @@ services:
   #     - ./frontend/:/frontend
   #     - ./frontend/node_modules/:/frontend/node_modules
   #    tty: true
+
+  db:
+    container_name: mysqldb
+    image: mysql:latest
+    env_file :
+      - ./backend/devenvs/mysqldb.env
+    volumes:
+     - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
   backend:
     build: ./backend
     command: >
@@ -25,5 +46,6 @@ services:
       - "8080:8080"
     volumes:
       - ./backend:/app
-#    depends_on:
-#      - mysqldb
+    depends_on:
+      db:
+        condition: service_healthy
