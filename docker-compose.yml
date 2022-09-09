@@ -19,14 +19,18 @@ services:
   #     - ./frontend/node_modules/:/frontend/node_modules
   #    tty: true
 
-  mysql:
-    image: mysql
+  db:
+    container_name: mysqldb
+    image: mysql:latest
     env_file :
       - ./backend/devenvs/mysqldb.env
     volumes:
      - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 20s
@@ -43,5 +47,5 @@ services:
     volumes:
       - ./backend:/app
     depends_on:
-      mysql:
+      db:
         condition: service_healthy
