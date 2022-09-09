@@ -10,4 +10,4 @@ media
 
 # Environments
 *.env
-/devenvs/mysqldb.env
+.DS_Store
