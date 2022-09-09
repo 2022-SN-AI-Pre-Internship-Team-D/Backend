@@ -1,7 +1,7 @@
 version: "3"
 
 volumes:
-  mysql_data:
+  mysql_data: {}
 
 services:
   # docker-compose.yml 파일이 밖에 있을 때 기준
@@ -49,3 +49,4 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
