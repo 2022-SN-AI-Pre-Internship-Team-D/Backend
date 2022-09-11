@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from letters.models import letter, anniversary
-from .models import user
+from .models import User
 
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -15,7 +15,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
 
-        token['username'] = user.username
+        token['user_uuid'] = str(user.uuid)
 
         return token
 
@@ -25,7 +25,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['GET'])
 def getRoutes(request):
     routes = [
-        'token/',
+        'sign-in/',
         'token/refresh/',
         'token/verify/',
     ]
