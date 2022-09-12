@@ -41,7 +41,7 @@ AWS_REGION = env('AWS_REGION')
 # S3 Storages
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
-SECRET_KEY = 'django-insecure-g2_^f+gnj2&(1s$b#%5*^2kw@809r$pvcs(t=d0vj^8y9&u_#2'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = true 
