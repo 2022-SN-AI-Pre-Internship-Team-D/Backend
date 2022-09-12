@@ -16,6 +16,7 @@ import os, environ
 import pymysql  
 pymysql.install_as_MySQLdb()
 
+from datetime import timedelta
 
 env = environ.Env(
     # set casting, default value
@@ -52,10 +53,31 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #rest framework
     'rest_framework',
+    'drf_yasg',
+    # jwt
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     #local app
     'users',
     'letters',
 ]
+
+AUTH_USER_MODEL = 'users.User' 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'ALGORITHM': env('ALGORITHM'),
+    'SIGNING_KEY': SECRET_KEY,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
