@@ -13,14 +13,14 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os, environ
 
-import pymysql  
-pymysql.install_as_MySQLdb()
+#settings.py
+from pathlib import Path
 
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False)
-)
+    #DEBUG=(bool, False)
+#)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,9 +34,17 @@ environ.Env.read_env(
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = env('AWS_REGION')
+
+# S3 Storages
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+SECRET_KEY = 'django-insecure-g2_^f+gnj2&(1s$b#%5*^2kw@809r$pvcs(t=d0vj^8y9&u_#2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = true 
 
 ALLOWED_HOSTS = []
 
@@ -56,6 +64,13 @@ INSTALLED_APPS = [
     'users',
     'letters',
 ]
+
+#AWS_S3_OBJECT_PARAMETERS = {
+ #   'CacheControl': 'max-age=86400',
+#}
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'path/to/store/my/files/')
+MEDIA_ROOT = '/path/to/store/my/files/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -91,8 +106,15 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+#DATABASES = {
+  #  'default': env.db(),
+#}
+
 DATABASES = {
-    'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
 
 
