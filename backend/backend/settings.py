@@ -120,11 +120,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
-
+#utc기준으로 하면 db저장&값읽어오기는 utc시간 / 렌더링할때는 한국 시간 == 같은 시간 아님
+TIME_ZONE =  'Asia/Seoul'   # timezone1서울
 USE_I18N = True
-
-USE_TZ = True
+USE_L10N = True
+USE_TZ = False #USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
