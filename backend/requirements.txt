@@ -8,3 +8,6 @@ djangorestframework-simplejwt==5.2.0
 pymysql==1.0.2
 mysqlclient
 cryptography
+
+# swagger
+drf-yasg==1.21.3
