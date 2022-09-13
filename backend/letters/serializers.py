@@ -6,7 +6,7 @@ class LetterSerializer(serializers.ModelSerializer):
         model = letter
         fields = ("id", "uuid", "user_id", "anni_id", "text", "file", "is_active")
 
-class EventLetterStatisticsSerializer(serializers.Serializer):
+class EventLetterSerializer(serializers.Serializer):
     event = serializers.SerializerMethodField()
     count = serializers.SerializerMethodField()
 
