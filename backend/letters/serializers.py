@@ -14,9 +14,9 @@ class LetterCountSerializer(serializers.Serializer):
         model = letter
         fields = '__all__'
 
-    def get_kind(self, model_instance):
-        return model_instance['event']
+    def get_event(self, model_instance):
+        return model_instance['anni_id']
 
-    def get_cnt(self, model_instance):
+    def get_count(self, model_instance):
         return model_instance['count']
 
