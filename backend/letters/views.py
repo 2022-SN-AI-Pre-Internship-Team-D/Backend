@@ -11,10 +11,11 @@ from . import utils
 
 
 class LetterViewAPI(APIView):
-    def get(self, request, user_uuid, page_number):
-        user_id = utils.get_user(user_uuid).id
+    def get(self, request, user_uuid, event_uuid, page_number):
+        user_id = utils.get_user_id(user_uuid)
+        event_id = utils.get_event_id(event_uuid)
         letters = letter.objects.filter(
-            user_id=user_id, is_active=1).order_by('-created_at')
+            user_id=user_id, anni_id=event_id, is_active=1).order_by('-created_at')
         paginator = Paginator(letters, 3)
         page = page_number
         try:
