@@ -12,7 +12,7 @@ from . import utils
 
 class LetterViewAPI(APIView):
     def get(self, request, user_uuid, page_number):
-        user_id = utils.get_user_id(user_uuid)
+        user_id = utils.get_user(user_uuid).id
         letters = letter.objects.filter(
             user_id=user_id, is_active=1).order_by('-created_at')
         paginator = Paginator(letters, 3)
@@ -29,10 +29,10 @@ class LetterViewAPI(APIView):
 
 class LetterAPI(APIView):
     def post(self, request, user_uuid, event_uuid):
-        user_id = utils.get_user_id(user_uuid)
-        event_id = utils.get_event_id(event_uuid)
-        text = request.FILES.get('text')
+        user = utils.get_user(user_uuid)
+        event = utils.get_event(event_uuid)
+        text = request.POST.get('text')
         file = request.FILES.get('file')
         letter.objects.create(
-            user_id=user_id, event_id=event_id, text=text, file=file)
+            user_id=user, anni_id=event, text=text, file=file)
         return Response(status=status.HTTP_200_OK)
