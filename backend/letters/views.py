@@ -62,7 +62,7 @@ def get_event_cnt(request, user_uuid, event_uuid):
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['GET'])
 def check_birth_date(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
     now = datetime.now().date()
