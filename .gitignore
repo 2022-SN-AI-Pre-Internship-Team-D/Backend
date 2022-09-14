@@ -11,4 +11,4 @@ media
 # Environments
 *.env
 .DS_Store
-migrations
+**/migrations/*
