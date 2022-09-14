@@ -25,3 +25,7 @@ urlpatterns = [
     re_path(r'^swagger/$', schema_view_v1.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view_v1.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
+
+# http://127.0.0.1:8080/redoc/
+# http://127.0.0.1:8080/swagger/
+# postman = http://localhost:8080/swagger/?format=openapi
