@@ -62,13 +62,23 @@ def get_event_cnt(request, user_uuid, event_uuid):
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def check_date(request, user_uuid, event_uuid):
+@api_view(['POST'])
+def check_birth_date(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
-    event_id = utils.get_event_id(event_uuid)
-    
     now = datetime.now().date()
-    date = anniversary.objects.get(id=event_id, user_id=user_id).date
+    date = User.objects.get(id=user_id).birth
+    result = (date <= now)
+    if result == True:
+        return JsonResponse({"status": "True"})
+    else:
+        date_diff = date - now
+        return JsonResponse({"status": "False", "days":date_diff.days})
+
+@api_view(['GET'])
+def check_date(request, event_uuid):
+    event_id = utils.get_event_id(event_uuid)
+    now = datetime.now().date()
+    date = anniversary.objects.get(id=event_id).date
     result = (date <= now)
     if result == True:
         return JsonResponse({"status": "True"})
