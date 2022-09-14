@@ -19,7 +19,7 @@ class letter(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
-    anni_id = models.ForeignKey(anniversary, on_delete=models.CASCADE, db_column='anni_id')
+    anni_id = models.ForeignKey(anniversary, on_delete=models.CASCADE, db_column='anni_id',blank=True,null=True)
     text = models.CharField(max_length=255)
     file = models.CharField(max_length=255)
     media = models.CharField(max_length=255)
