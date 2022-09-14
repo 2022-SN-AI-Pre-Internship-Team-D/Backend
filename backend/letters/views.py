@@ -1,3 +1,7 @@
+from datetime import datetime
+from http.client import HTTPResponse
+from django.http import JsonResponse
+
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
@@ -15,7 +19,7 @@ from django.db.models import Count
 
 
 @api_view(['GET'])
-def get_letters(self, request, user_uuid, event_uuid, page_number):
+def get_letters(request, user_uuid, event_uuid, page_number):
     user_id = utils.get_user_id(user_uuid)
     event_id = utils.get_event_id(event_uuid)
     letters = letter.objects.filter(
@@ -31,7 +35,8 @@ def get_letters(self, request, user_uuid, event_uuid, page_number):
     serializer = LetterSerializer(contacts, many=True)
     return Response(serializer.data)
 
-def write_letter(self, request, user_uuid, event_uuid):
+@api_view(['POST'])
+def write_letter(request, user_uuid, event_uuid):
     user = utils.get_user(user_uuid)
     event = utils.get_event(event_uuid)
     text = request.POST.get('text')
@@ -56,3 +61,18 @@ def get_event_cnt(request, user_uuid, event_uuid):
         'anni_id').annotate(count=Count('anni_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def check_date(request, user_uuid, event_uuid):
+    user_id = utils.get_user_id(user_uuid)
+    event_id = utils.get_event_id(event_uuid)
+    
+    now = datetime.now().date()
+    date = anniversary.objects.get(id=event_id, user_id=user_id).date
+    result = (date <= now)
+    if result == True:
+        return JsonResponse({"status": "True"})
+    else:
+        date_diff = date - now
+        return JsonResponse({"status": "False", "days":date_diff.days})
+    
