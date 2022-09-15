@@ -142,6 +142,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+LANGUAGES = [       
+    ('ko', 'Korean'),
+    ('en-us', 'English')
+]
+
 TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
