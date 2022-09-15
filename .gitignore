@@ -11,5 +11,4 @@ media
 # Environments
 *.env
 .DS_Store
-backend/users/migrations/*.py
 **/migrations/*
