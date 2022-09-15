@@ -5,7 +5,7 @@ from datetime import date, datetime
 
 class User(AbstractUser):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    email = models.EmailField(blank=True, unique=True)
+    email = models.EmailField(blank=False, unique=True)
     birth = models.DateField(blank=False)
     is_active = models.IntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
