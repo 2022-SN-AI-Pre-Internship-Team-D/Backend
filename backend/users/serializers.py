@@ -1,4 +1,12 @@
+from django.shortcuts import render
+from letters.models import letter, anniversary
 from .models import User
+from users.models import User
+from letters import utils
+from .serializers import *
+
+from django.http import JsonResponse
+from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -53,3 +61,9 @@ class SignupSirializer(serializers.ModelSerializer):
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SignupSirializer
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        # fields = ("id", "uuid", "username", "email", "password", "birth", "image", "is_active")
+        fields = ("id", "uuid", "username", "birth", "image")
