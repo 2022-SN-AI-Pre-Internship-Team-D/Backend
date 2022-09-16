@@ -20,10 +20,13 @@ class SignupSirializer(serializers.ModelSerializer):
     birth = serializers.DateField(
         required=True
     )
+    image = serializers.CharField(
+        required=True
+    )
     
     class Meta:
         model = User
-        fields = ('username','email','password','password2','birth')
+        fields = ('username','email','password','password2','birth','image')
     
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -37,8 +40,10 @@ class SignupSirializer(serializers.ModelSerializer):
         user = User.objects.create(
             username = validated_data['username'],
             email = validated_data['email'],
-            birth = validated_data['birth']
+            birth = validated_data['birth'],
+            image = validated_data['image']
         )
+
         token = RefreshToken.for_user(user)
         user.set_password(validated_data['password'])
         user.refreshtoken = token
