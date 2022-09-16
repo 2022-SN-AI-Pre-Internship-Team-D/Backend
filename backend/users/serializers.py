@@ -20,7 +20,7 @@ class SignupSirializer(serializers.ModelSerializer):
     birth = serializers.DateField(
         required=True
     )
-    image = serializers.CharField(
+    image = serializers.FileField(
         required=True
     )
     
@@ -40,10 +40,9 @@ class SignupSirializer(serializers.ModelSerializer):
         user = User.objects.create(
             username = validated_data['username'],
             email = validated_data['email'],
-            birth = validated_data['birth'],
-            image = validated_data['image']
+            birth = validated_data['birth']
         )
-
+        user.image = validated_data['image']
         token = RefreshToken.for_user(user)
         user.set_password(validated_data['password'])
         user.refreshtoken = token
