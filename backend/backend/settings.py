@@ -36,7 +36,11 @@ environ.Env.read_env(
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< Updated upstream
 
+=======
+SECRET_KEY = env('SECRET_KEY')
+>>>>>>> Stashed changes
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_REGION = env('AWS_REGION')
@@ -44,7 +48,10 @@ AWS_REGION = env('AWS_REGION')
 # S3 Storages
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = env('SECRET_KEY')
@@ -72,14 +79,25 @@ INSTALLED_APPS = [
     #local app
     'users',
     'letters',
+    #s3 bucket
+    'storages',
+    #'django.contrib.sites',
 ]
 
+<<<<<<< Updated upstream
 #AWS_S3_OBJECT_PARAMETERS = {
  #   'CacheControl': 'max-age=86400',
 #}
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'path/to/store/my/files/')
 MEDIA_ROOT = '/path/to/store/my/files/'
+=======
+#SITE_ID = 1
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = '/path/to/store/my/files/'
+
+>>>>>>> Stashed changes
 AUTH_USER_MODEL = 'users.User' 
 
 REST_FRAMEWORK = {
