@@ -65,5 +65,4 @@ class SignupView(generics.CreateAPIView):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        # fields = ("id", "uuid", "username", "email", "password", "birth", "image", "is_active")
-        fields = ("id", "uuid", "username", "birth", "image")
+        fields = ("id", "uuid", "username", "email", "password", "birth", "image", "is_active")

@@ -45,9 +45,9 @@ def get_profile(request, user_uuid):
     image = User.objects.get(id=user_id).image
     return Response(
         {
-            'birth' : birth,
+            'image' : image,
             'username' : username,
-            'image' : image
+            'birth' : birth
         }
         )
 
