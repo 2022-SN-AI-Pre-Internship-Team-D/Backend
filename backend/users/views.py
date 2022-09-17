@@ -2,7 +2,7 @@ from django.shortcuts import render
 from letters.models import letter, anniversary
 from .models import User
 from letters import utils
-from .serializers import SignupSirializer
+from .serializers import *
 
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -38,20 +38,16 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
-def get_birth(request, user_uuid):
+def get_profile(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
     birth = User.objects.get(id=user_id).birth
-    # serializer = UserSerializer(birth, many=True)
-    return Response(birth)
-
-@api_view(['GET'])
-def get_username(request, user_uuid):
-    user_id = utils.get_user_id(user_uuid)
     username = User.objects.get(id=user_id).username
-    return Response(username)
-
-@api_view(['GET'])
-def get_image(request, user_uuid):
-    user_id = utils.get_user_id(user_uuid)
     image = User.objects.get(id=user_id).image
-    return Response(image)
+    return Response(
+        {
+            'birth' : birth,
+            'username' : username,
+            'image' : image
+        }
+        )
+
