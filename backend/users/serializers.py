@@ -11,8 +11,6 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from rest_framework import generics, status
-
 class SignupSirializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required = True
@@ -24,7 +22,6 @@ class SignupSirializer(serializers.ModelSerializer):
     password2 = serializers.CharField(
         write_only = True, required=True
     )
-
     birth = serializers.DateField(
         required=True
     )
@@ -60,6 +57,7 @@ class SignupSirializer(serializers.ModelSerializer):
 
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
+    serializer_class = SignupSirializer
     serializer_class = SignupSirializer
 
 class UserSerializer(serializers.ModelSerializer):
