@@ -36,10 +36,21 @@ environ.Env.read_env(
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = env('AWS_REGION')
+
+# S3 Storages
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = '/path/to/store/my/files/'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -60,6 +71,9 @@ INSTALLED_APPS = [
     #local app
     'users',
     'letters',
+    #s3 bucket
+    's3connect',
+    'storages'
 ]
 
 AUTH_USER_MODEL = 'users.User' 
