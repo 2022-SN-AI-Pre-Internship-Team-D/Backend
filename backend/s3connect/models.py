@@ -7,3 +7,6 @@ class S3(models.Model):
     photo = models.FileField()
     def __str__(self):
         return self.title
+    
+    class Meta:
+        db_table = 's3'
