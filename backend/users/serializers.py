@@ -24,7 +24,6 @@ class SignupSirializer(serializers.ModelSerializer):
     password2 = serializers.CharField(
         write_only = True, required=True
     )
-
     birth = serializers.DateField(
         required=True
     )

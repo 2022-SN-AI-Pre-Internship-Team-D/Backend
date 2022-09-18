@@ -107,14 +107,14 @@ def check_birth_date(request, user_uuid):
     birth = User.objects.get(id=user_id).birth
     birth = date(2022, birth.month, birth.day)
     if birth == now:
-        return JsonResponse({"status": "True"})
+        return JsonResponse({"status": "true"})
     elif birth > now:
         date_diff = date - now
-        return JsonResponse({"status": "False", "days":date_diff.days})
+        return JsonResponse({"status": "false", "days":date_diff.days})
     elif birth < now:
         tmp_birth = birth + relativedelta(years=1)
         date_diff = tmp_birth - now 
-        return JsonResponse({"status": "False", "days":date_diff.days})
+        return JsonResponse({"status": "false", "days":date_diff.days})
 
 @api_view(['GET'])
 def check_date(request, event_uuid):
@@ -123,12 +123,11 @@ def check_date(request, event_uuid):
     date = anniversary.objects.get(id=event_id).date
 
     if date == now:
-        return JsonResponse({"status": "True"})
+        return JsonResponse({"status": "true"})
     elif date > now:
         date_diff = date - now
-        return JsonResponse({"status": "False", "days":date_diff.days})
+        return JsonResponse({"status": "false", "days":date_diff.days})
     elif date < now:
         tmp_date = date + relativedelta(years=1)
         date_diff = tmp_date - now 
-        return JsonResponse({"status": "False", "days":date_diff.days})
-    
+        return JsonResponse({"status": "false", "days":date_diff.days})
