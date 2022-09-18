@@ -84,20 +84,11 @@ INSTALLED_APPS = [
     #'django.contrib.sites',
 ]
 
-<<<<<<< Updated upstream
-#AWS_S3_OBJECT_PARAMETERS = {
- #   'CacheControl': 'max-age=86400',
-#}
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'path/to/store/my/files/')
-MEDIA_ROOT = '/path/to/store/my/files/'
-=======
 #SITE_ID = 1
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 MEDIA_ROOT = '/path/to/store/my/files/'
 
->>>>>>> Stashed changes
 AUTH_USER_MODEL = 'users.User' 
 
 REST_FRAMEWORK = {
