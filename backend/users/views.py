@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from letters.models import letter, anniversary
 from .models import User
-from .serializers import SignupSirializer
+from letters import utils
+from .serializers import *
 
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -35,3 +36,18 @@ def getRoutes(request):
         'token/verify/',
     ]
     return Response(routes)
+
+@api_view(['GET'])
+def get_profile(request, user_uuid):
+    user_id = utils.get_user_id(user_uuid)
+    birth = User.objects.get(id=user_id).birth
+    username = User.objects.get(id=user_id).username
+    image = User.objects.get(id=user_id).image
+    return Response(
+        {
+            'image' : image,
+            'username' : username,
+            'birth' : birth
+        }
+        )
+

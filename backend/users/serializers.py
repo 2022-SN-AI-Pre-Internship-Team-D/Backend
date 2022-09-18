@@ -1,4 +1,12 @@
+from django.shortcuts import render
+from letters.models import letter, anniversary
 from .models import User
+from users.models import User
+from letters import utils
+from .serializers import *
+
+from django.http import JsonResponse
+from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -16,14 +24,16 @@ class SignupSirializer(serializers.ModelSerializer):
     password2 = serializers.CharField(
         write_only = True, required=True
     )
-
     birth = serializers.DateField(
+        required=True
+    )
+    image = serializers.FileField(
         required=True
     )
     
     class Meta:
         model = User
-        fields = ('username','email','password','password2','birth')
+        fields = ('username','email','password','password2','birth','image')
     
     def validate(self, data):
         if data['password'] != data['password2']:
@@ -39,6 +49,7 @@ class SignupSirializer(serializers.ModelSerializer):
             email = validated_data['email'],
             birth = validated_data['birth']
         )
+        user.image = validated_data['image']
         token = RefreshToken.for_user(user)
         user.set_password(validated_data['password'])
         user.refreshtoken = token
@@ -49,3 +60,8 @@ class SignupSirializer(serializers.ModelSerializer):
 class SignupView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = SignupSirializer
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id", "uuid", "username", "email", "password", "birth", "image", "is_active")
