@@ -4,7 +4,7 @@ from .models import letter, anniversary
 class LetterSerializer(serializers.ModelSerializer):
     class Meta:
         model = letter
-        fields = ("id", "uuid", "user_id", "anni_id", "text", "file", "is_active")
+        fields = ("id", "uuid", "user_id", "anni_id", "text", "file", "media")
 
 class LetterCountSerializer(serializers.Serializer):
     event = serializers.SerializerMethodField()
