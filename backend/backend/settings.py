@@ -67,7 +67,6 @@ INSTALLED_APPS = [
     'users',
     'letters',
     #s3 bucket
-    's3connect',
     'storages'
 ]
 
