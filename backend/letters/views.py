@@ -109,7 +109,7 @@ def check_birth_date(request, user_uuid):
     if birth == now:
         return JsonResponse({"status": "true"})
     elif birth > now:
-        date_diff = brith - now
+        date_diff = birth - now
         return JsonResponse({"status": "false", "days":date_diff.days})
     elif birth < now:
         tmp_birth = birth + relativedelta(years=1)
