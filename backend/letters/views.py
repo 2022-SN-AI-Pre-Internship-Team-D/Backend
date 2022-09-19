@@ -134,4 +134,25 @@ def check_date(request, event_uuid):
         tmp_date = date + relativedelta(years=1)
         date_diff = tmp_date - now 
         return JsonResponse({"status": "false", "days":date_diff.days})
+
+# mainpage soomin #
+
+@api_view(['GET'])
+def mainpage_birth_event_info(request, event_uuid, user_uuid):
+    event_id = utils.get_event_id(event_uuid)
+    event_date = anniversary.objects.get(id=event_id).date
+    event_name = anniversary.objects.get(id=event_id).name
     
+    user_id = utils.get_event_id(user_uuid)
+    birth_date = User.objects.get(id=user_id).birth
+    
+    return Response(
+        {
+            'event_id' : event_id,
+            'user_id' : user_id,
+            'event_date' : event_date,
+            'event_name' : event_name,
+            'birth_date' : birth_date            
+            
+        } 
+        )
