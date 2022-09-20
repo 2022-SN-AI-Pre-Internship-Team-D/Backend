@@ -4,6 +4,7 @@ from .models import User
 from users.models import User
 from letters import utils
 from .serializers import *
+from uuid import uuid4
 
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
@@ -30,7 +31,7 @@ class SignupSirializer(serializers.ModelSerializer):
     image = serializers.FileField(
         required=True
     )
-    
+
     class Meta:
         model = User
         fields = ('username','email','password','password2','birth','image')
@@ -40,7 +41,6 @@ class SignupSirializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 "password" : "Password fields didn't match"
             })
-        
         return data
 
     def create(self, validated_data):
@@ -49,17 +49,15 @@ class SignupSirializer(serializers.ModelSerializer):
             email = validated_data['email'],
             birth = validated_data['birth']
         )
-        user.image = validated_data['image']
+        uuid = str(uuid4())
+        user.image = utils.get_file_url(validated_data['image'], uuid)
+        
         token = RefreshToken.for_user(user)
         user.set_password(validated_data['password'])
         user.refreshtoken = token
         user.save()
     
         return user
-
-class SignupView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = SignupSirializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
