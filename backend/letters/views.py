@@ -16,7 +16,7 @@ from users.models import User
 from . import utils
 from uuid import uuid4
 
-from .serializers import AnniversaryInfoSerializer, LetterSerializer, LetterCountSerializer
+from .serializers import UserInfoSerializer, AnniversaryInfoSerializer, LetterSerializer, LetterCountSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
@@ -136,4 +136,11 @@ def check_date(request, event_uuid):
 def get_all_event_info(request):
     events = anniversary.objects.all()
     serializer = AnniversaryInfoSerializer(events, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_user_birth_info(request, user_uuid):
+    user_id = utils.get_user_id(user_uuid)
+    events = User.objects.filter(id = user_id)
+    serializer = UserInfoSerializer(events, many=True)
     return Response(serializer.data)

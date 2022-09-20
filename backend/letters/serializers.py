@@ -1,4 +1,4 @@
-from asyncio import events
+from users.models import User
 from rest_framework import serializers
 from .models import letter, anniversary
 from .utils import get_event_name
@@ -44,3 +44,8 @@ class AnniversaryInfoSerializer(serializers.Serializer):
     def get_date(self, model_instance):
         date = str(model_instance.date)
         return date[5:]
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("username", "birth")
