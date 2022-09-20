@@ -1,3 +1,4 @@
+from asyncio import events
 from rest_framework import serializers
 from .models import letter, anniversary
 from .utils import get_event_name
@@ -23,4 +24,23 @@ class LetterCountSerializer(serializers.Serializer):
 
     def get_count(self, model_instance):
         return model_instance['count']
+
+
+class AnniversaryInfoSerializer(serializers.Serializer):
+    event = serializers.SerializerMethodField()
+    uuid = serializers.SerializerMethodField()
+    date = serializers.SerializerMethodField()
+
+    class Meta:
+        model = anniversary
+        fields = '__all__'
+    
+    def get_event(self, model_instance):
+        return model_instance.name
+
+    def get_uuid(self, model_instance):
+        return model_instance.uuid
+    
+    def get_date(self, model_instance):
+        return model_instance.date
 

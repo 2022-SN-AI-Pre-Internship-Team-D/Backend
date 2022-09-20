@@ -16,7 +16,7 @@ from users.models import User
 from . import utils
 from uuid import uuid4
 
-from .serializers import LetterSerializer, LetterCountSerializer
+from .serializers import AnniversaryInfoSerializer, LetterSerializer, LetterCountSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
@@ -131,4 +131,9 @@ def check_date(request, event_uuid):
         tmp_date = date + relativedelta(years=1)
         date_diff = tmp_date - now 
         return JsonResponse({"status": "false", "days":date_diff.days})
-    
+
+@api_view(['GET'])
+def get_all_event_info(request):
+    events = anniversary.objects.all()
+    serializer = AnniversaryInfoSerializer(events, many=True)
+    return Response(serializer.data)
