@@ -135,7 +135,6 @@ def check_date(request, event_uuid):
         date_diff = tmp_date - now 
         return JsonResponse({"status": "false", "days":date_diff.days})
 
-# mainpage soomin #
 
 @api_view(['GET'])
 def mainpage_birth_event_info(request, event_uuid, user_uuid):
