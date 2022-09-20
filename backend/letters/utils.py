@@ -12,6 +12,9 @@ def get_event(event_uuid):
 def get_user_id(user_uuid):
     return User.objects.get(uuid = user_uuid).id
 
+def get_event_name(event_id):
+    return anniversary.objects.get(id = event_id).name
+
 def get_event_id(event_uuid):
     return anniversary.objects.get(uuid = event_uuid).id
 

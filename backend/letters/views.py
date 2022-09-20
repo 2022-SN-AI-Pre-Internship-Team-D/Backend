@@ -81,8 +81,7 @@ def birth_write_letter(request, user_uuid):
 @api_view(['GET'])
 def get_all_events_cnt(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
-    letters = letter.objects.filter(user_id=user_id).values(
-        'anni_id').annotate(count=Count('anni_id'))
+    letters = letter.objects.filter(user_id=user_id, anni_id__isnull=False).values('anni_id').annotate(count=Count('anni_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
@@ -90,16 +89,14 @@ def get_all_events_cnt(request, user_uuid):
 def get_event_cnt(request, user_uuid, event_uuid):
     user_id = utils.get_user_id(user_uuid)
     event_id = utils.get_event_id(event_uuid)
-    letters = letter.objects.filter(user_id=user_id, anni_id=event_id).values(
-        'anni_id').annotate(count=Count('anni_id'))
+    letters = letter.objects.filter(user_id=user_id, anni_id=event_id).values('anni_id').annotate(count=Count('anni_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def get_birth_cnt(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
-    letters = letter.objects.filter(user_id=user_id,anni_id__isnull=True).values(
-        'anni_id').annotate(count=Count('user_id'))
+    letters = letter.objects.filter(user_id=user_id,anni_id__isnull=True).values('anni_id').annotate(count=Count('user_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 

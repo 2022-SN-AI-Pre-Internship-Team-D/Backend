@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import letter, anniversary
+from .utils import get_event_name
 
 class LetterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,7 +16,10 @@ class LetterCountSerializer(serializers.Serializer):
         fields = '__all__'
 
     def get_event(self, model_instance):
-        return model_instance['anni_id']
+        tmp = model_instance['anni_id']
+        if not tmp:
+            return "birth"
+        return get_event_name(tmp)
 
     def get_count(self, model_instance):
         return model_instance['count']
