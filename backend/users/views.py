@@ -38,7 +38,7 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
-def get_profile(request, user_uuid):
+def get_info(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
     birth = User.objects.get(id=user_id).birth
     username = User.objects.get(id=user_id).username
@@ -50,4 +50,9 @@ def get_profile(request, user_uuid):
             'birth' : birth
         }
         )
+
+@api_view(['GET'])
+def get_username(request, user_uuid):
+    username = User.objects.get(uuid = user_uuid).username
+    return Response(username)
 
