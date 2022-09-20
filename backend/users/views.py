@@ -56,3 +56,11 @@ def get_username(request, user_uuid):
     username = User.objects.get(uuid = user_uuid).username
     return Response(username)
 
+@api_view(['GET'])
+def user_exist_db(request, user_uuid):
+    if User.objects.filter(uuid=user_uuid).exists():
+        return JsonResponse({"status": "true"})
+    else :
+        return JsonResponse({"status": "false"})
+
+
