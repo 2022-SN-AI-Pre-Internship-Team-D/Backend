@@ -42,5 +42,5 @@ class AnniversaryInfoSerializer(serializers.Serializer):
         return model_instance.uuid
     
     def get_date(self, model_instance):
-        return model_instance.date
-
+        date = str(model_instance.date)
+        return date[5:]
