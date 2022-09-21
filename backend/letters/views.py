@@ -139,15 +139,12 @@ def check_date(request, event_uuid):
 @api_view(['GET'])
 def mainpage_info(request, user_uuid):
     
-
-
     user_id = utils.get_user_id(user_uuid)
     
-    letters = letter.objects.filter(
+    event = event.objects.filter(
         user_id=user_id, anni_id__isnull=True, is_active=1).order_by('created_at')
     
-
-    serializer = LetterSerializer(letters, many=True)
+    serializer = EventSerializer(event, many=True)
     return Response( serializer.data ) ##여기 수정하기!
 
 

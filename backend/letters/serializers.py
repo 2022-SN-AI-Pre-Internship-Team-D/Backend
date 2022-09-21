@@ -21,20 +21,22 @@ class LetterCountSerializer(serializers.Serializer):
     def get_count(self, model_instance):
         return model_instance['count']
 
+#mainpage 추가할 부분
+
 class EventSerializer(serializers.Serializer):
     uuid = serializers.UUIDField(),
     name = serializers.CharField(),
     date = serializers.DateField(),
 
     class Meta:
-        model = anniversary, User
+        model = anniversary
         fields = '__all__'
     
     def get_uuid(self, model_instance):
         return model_instance['uuid']
     def get_name(self, model_instance):
         return model_instance['name']
-    def get_name(self, model_instance):
+    def get_date(self, model_instance):
         return model_instance['date']
 
         #밑에거는 또같이
