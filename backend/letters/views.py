@@ -65,7 +65,7 @@ def write_letter(request, user_uuid, event_uuid):
     uuid = str(uuid4())
     file_url = utils.get_file_url(file, uuid)
     media_url = utils.get_file_url(media, uuid, input_type="media")
-    letter.objects.create(uuid=uuid, user_id=user, text=text, file=file_url, media=media_url)
+    letter.objects.create(uuid=uuid, user_id=user, anni_id = event, text=text, file=file_url, media=media_url)
     return Response(status=status.HTTP_200_OK)
 
 
