@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import letter, anniversary
+from users.models import User
 
 class LetterSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,3 +21,25 @@ class LetterCountSerializer(serializers.Serializer):
     def get_count(self, model_instance):
         return model_instance['count']
 
+class EventSerializer(serializers.Serializer):
+    uuid = serializers.UUIDField(),
+    name = serializers.CharField(),
+    date = serializers.DateField(),
+
+    class Meta:
+        model = anniversary, User
+        fields = '__all__'
+    
+    def get_uuid(self, model_instance):
+        return model_instance['uuid']
+    def get_name(self, model_instance):
+        return model_instance['name']
+    def get_name(self, model_instance):
+        return model_instance['date']
+
+        #밑에거는 또같이
+    
+#변수에서 필드 이름은 models.py참고 / 
+#user id , event 부분을 하나의 serializer에 추가
+#기념일 + 생일 테이블
+#모든 필드가 필요한지

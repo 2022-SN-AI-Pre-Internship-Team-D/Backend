@@ -137,21 +137,39 @@ def check_date(request, event_uuid):
 
 
 @api_view(['GET'])
-def mainpage_birth_event_info(request, event_uuid, user_uuid):
-    event_id = utils.get_event_id(event_uuid)
-    event_date = anniversary.objects.get(id=event_id).date
-    event_name = anniversary.objects.get(id=event_id).name
+def mainpage_info(request, user_uuid):
     
-    user_id = utils.get_event_id(user_uuid)
-    birth_date = User.objects.get(id=user_id).birth
+
+
+    user_id = utils.get_user_id(user_uuid)
     
-    return Response(
-        {
-            'event_id' : event_id,
-            'user_id' : user_id,
-            'event_date' : event_date,
-            'event_name' : event_name,
-            'birth_date' : birth_date            
+    letters = letter.objects.filter(
+        user_id=user_id, anni_id__isnull=True, is_active=1).order_by('created_at')
+    
+
+    serializer = LetterSerializer(letters, many=True)
+    return Response( serializer.data ) ##여기 수정하기!
+
+
+    #birth_date = User.objects.get(id=user_id).birth
+    # user_id = utils.get_user_id(user_uuid)
+    # birth_date = User.objects.get(id=user_id).birth
+    # event_id = utils.get_event_id(event_uuid)
+    # event_date = anniversary.objects.get(id=event_id).date
+    # event_name = anniversary.objects.get(id=event_id).name
+    
+    #anniversary event 모두 가져오기
+
+    #event_id = utils.get_user_id
+    #event = anniversary.objects.all()
+    #event_name = anniversary.objects.all()
+        # {   
+
+        #     # 'event_id' : event_id,
+        #     # 'user_id' : user_id,
+        #     # 'event_date' : event_date,
+        #     # 'event_name' : event_name,
+        #     # 'birth_date' : birth_date            
             
-        } 
-        )
+        # } 
+        # )

@@ -11,5 +11,6 @@ urlpatterns =[
     path('users/<user_uuid>/events/<event_uuid>/counts',views.get_event_cnt),
     path('events/<event_uuid>/check-date',views.check_date),
     path('users/<user_uuid>/events/birth/check-birth-date',views.check_birth_date),
-    path('users/<user_uuid>/mainpage-birth-event-info',views.mainpage_birth_event_info),
+    path('users/<user_uuid>/events/all',views.mainpage_info)
+    #수정할것
 ]
