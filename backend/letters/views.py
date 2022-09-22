@@ -136,18 +136,22 @@ def check_date(request, event_uuid):
         return JsonResponse({"status": "false", "days":date_diff.days})
 
 
+#user_uuid 추가
 @api_view(['GET'])
-def mainpage_info(request, user_uuid):
-    
-    user_id = utils.get_user_id(user_uuid)
-    
+def mainpage_info(request, event_uuid): 
+    event = utils.get_event_id(event_uuid)
+    #이 부분 추가이유
     event = event.objects.filter(
-        user_id =user_id, anni_id__isnull=True, is_active=1).order_by('created_at') #기념일로 수정
+        event = event, anni_id__isnull=True, is_active=1).order_by('created_at') #기념일로 수정
     
     serializer = EventSerializer(event, many=True)
-    return Response( serializer.data ) ##여기 수정하기!
+    return Response( serializer.data ) 
+    
+    
+    ##여기 수정하기!
 
-
+    #return anniversary.objects.get(uuid = event_uuid).id
+    
     #birth_date = User.objects.get(id=user_id).birth
     # user_id = utils.get_user_id(user_uuid)
     # birth_date = User.objects.get(id=user_id).birth
