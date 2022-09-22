@@ -16,7 +16,7 @@ from users.models import User
 from . import utils
 from uuid import uuid4
 
-from .serializers import LetterSerializer, LetterCountSerializer
+from .serializers import LetterSerializer, LetterCountSerializer, EventSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
@@ -142,7 +142,7 @@ def mainpage_info(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
     
     event = event.objects.filter(
-        user_id=user_id, anni_id__isnull=True, is_active=1).order_by('created_at')
+        user_id =user_id, anni_id__isnull=True, is_active=1).order_by('created_at') #기념일로 수정
     
     serializer = EventSerializer(event, many=True)
     return Response( serializer.data ) ##여기 수정하기!
