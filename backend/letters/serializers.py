@@ -33,11 +33,13 @@ class EventSerializer(serializers.Serializer):
         fields = '__all__'
     
     def get_uuid(self, model_instance):
-        return model_instance['uuid']
+        return model_instance['event_uuid']
     def get_name(self, model_instance):
-        return model_instance['name']
+        return model_instance['event_name']
     def get_date(self, model_instance):
-        return model_instance['date']
+        return model_instance['event_date']
+    def get_user_uuid(self, model_instance):
+        return model_instance['user_uuid']
 
         #밑에거는 또같이
     
@@ -45,3 +47,4 @@ class EventSerializer(serializers.Serializer):
 #user id , event 부분을 하나의 serializer에 추가
 #기념일 + 생일 테이블
 #모든 필드가 필요한지
+

@@ -137,17 +137,23 @@ def check_date(request, event_uuid):
 
 
 #user_uuid 추가
+#기념일 테이블에서 모든 정보 가져오기
 @api_view(['GET'])
-def mainpage_info(request, event_uuid): 
-    event = utils.get_event_id(event_uuid)
+def mainpage_info(request, event_uuid, user_uuid): 
+    event_id = utils.get_event_id(event_uuid)
     #이 부분 추가이유
     event = event.objects.filter(
         event = event, anni_id__isnull=True, is_active=1).order_by('created_at') #기념일로 수정
     
+    user_id = utils.get_event_id(user_uuid)
+    
     serializer = EventSerializer(event, many=True)
     return Response( serializer.data ) 
     
-    
+
+
+
+
     ##여기 수정하기!
 
     #return anniversary.objects.get(uuid = event_uuid).id
