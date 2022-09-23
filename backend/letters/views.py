@@ -135,6 +135,7 @@ def check_date(request, event_uuid):
         date_diff = tmp_date - now 
         return JsonResponse({"status": "false", "days":date_diff.days})
 
+#김수민 메인페이지 부분
 
 #user_uuid 추가
 #기념일 테이블에서 모든 정보 가져오기
@@ -142,17 +143,23 @@ def check_date(request, event_uuid):
 def mainpage_info(request, event_uuid, user_uuid): 
     event_id = utils.get_event_id(event_uuid)
     #이 부분 추가이유
-    event = event.objects.filter(
-        event = event, anni_id__isnull=True, is_active=1).order_by('created_at') #기념일로 수정
+    # event = event.objects.filter(
+    #     event = event, anni_id__isnull=True, is_active=1).order_by('created_at') #기념일로 수정
     
+    #ERD 의 anniversary 테이블에서 모든 정보 가지고 오기
+
+    event = anniversary.objects.all()
+
+    #user 부분에서 생일 날짜와 uuid 데이터 가지고 오기
+
     user_id = utils.get_event_id(user_uuid)
+    birth_date = User.objects.get(id=user_id).birth 
+
+    #변수 처리를 하여 birth_date 이렇게 했는데 왜 회색 글자가 뜨는 건지...??
     
     serializer = EventSerializer(event, many=True)
     return Response( serializer.data ) 
     
-
-
-
 
     ##여기 수정하기!
 
