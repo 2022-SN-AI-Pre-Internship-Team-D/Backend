@@ -3,6 +3,7 @@ from letters.models import letter, anniversary
 from .models import User
 from letters import utils
 from .serializers import *
+# from . import utils
 
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -38,7 +39,7 @@ def getRoutes(request):
     return Response(routes)
 
 @api_view(['GET'])
-def get_profile(request, user_uuid):
+def get_info(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
     birth = User.objects.get(id=user_id).birth
     username = User.objects.get(id=user_id).username
@@ -51,3 +52,14 @@ def get_profile(request, user_uuid):
         }
         )
 
+@api_view(['GET'])
+def get_username(request, user_uuid):
+    username = User.objects.get(uuid = user_uuid).username
+    return Response(username)
+
+@api_view(['GET'])
+def user_exist_db(request, user_uuid):
+    if User.objects.filter(uuid=user_uuid).exists():
+        return JsonResponse({"status": "true"})
+    else :
+        return JsonResponse({"status": "false"})

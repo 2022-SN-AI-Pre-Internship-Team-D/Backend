@@ -49,9 +49,9 @@ class SignupSirializer(serializers.ModelSerializer):
             email = validated_data['email'],
             birth = validated_data['birth']
         )
+
         uuid = str(uuid4())
-        user.image = utils.get_file_url(validated_data['image'], uuid)
-        
+        user.image = utils.get_file_url(validated_data['image'], uuid)  
         token = RefreshToken.for_user(user)
         user.set_password(validated_data['password'])
         user.refreshtoken = token
