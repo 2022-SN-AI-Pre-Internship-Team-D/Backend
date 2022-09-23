@@ -3,7 +3,7 @@ from letters.models import letter, anniversary
 from .models import User
 from letters import utils
 from .serializers import *
-from . import utils
+# from . import utils
 
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -63,5 +63,3 @@ def user_exist_db(request, user_uuid):
         return JsonResponse({"status": "true"})
     else :
         return JsonResponse({"status": "false"})
-
-
