@@ -29,7 +29,7 @@ class SignupSirializer(serializers.ModelSerializer):
         required=True
     )
     image = serializers.FileField(
-        required=False
+        required=True
     )
 
     class Meta:
@@ -42,12 +42,6 @@ class SignupSirializer(serializers.ModelSerializer):
                 "password" : "Password fields didn't match"
             })
         return data
-    
-    def validate_image(self, data):
-        if data['image'] is None:
-            return None
-        else :
-            return data
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -57,16 +51,7 @@ class SignupSirializer(serializers.ModelSerializer):
         )
 
         uuid = str(uuid4())
-
-        user.image = utils.get_file_url(validated_data['image'], uuid)
-
-        # 조건문 작성!!!!!!!!!
-        # if validated_data['image'] == null: 
-        #     return exit
-        # else :
-        #     user.image = utils.get_file_url(validated_data['image'], uuid)
-        
-            
+        user.image = utils.get_file_url(validated_data['image'], uuid)  
         token = RefreshToken.for_user(user)
         user.set_password(validated_data['password'])
         user.refreshtoken = token
