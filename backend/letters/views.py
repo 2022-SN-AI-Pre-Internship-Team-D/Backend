@@ -1,3 +1,4 @@
+from ctypes import util
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
@@ -16,7 +17,7 @@ from users.models import User
 from . import utils
 from uuid import uuid4
 
-from .serializers import LetterSerializer, LetterCountSerializer
+from .serializers import UserInfoSerializer, AnniversaryInfoSerializer, LetterSerializer, LetterCountSerializer
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 
@@ -63,7 +64,8 @@ def write_letter(request, user_uuid, event_uuid):
     media = request.FILES.get('media')
     uuid = str(uuid4())
     file_url = utils.get_file_url(file, uuid)
-    letter.objects.create(uuid=uuid, user_id=user, anni_id = event, text=text, file=file_url, media=media)
+    media_url = utils.get_file_url(media, uuid, input_type="media")
+    letter.objects.create(uuid=uuid, user_id=user, anni_id = event, text=text, file=file_url, media=media_url)
     return Response(status=status.HTTP_200_OK)
 
 
@@ -75,14 +77,14 @@ def birth_write_letter(request, user_uuid):
     media = request.FILES.get('media')
     uuid = str(uuid4())
     file_url = utils.get_file_url(file, uuid)
-    letter.objects.create(uuid=uuid, user_id=user, text=text, file=file_url, media=media)
+    media_url = utils.get_file_url(media, uuid, input_type="media")
+    letter.objects.create(uuid=uuid, user_id=user, text=text, file=file_url, media=media_url)
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_all_events_cnt(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
-    letters = letter.objects.filter(user_id=user_id).values(
-        'anni_id').annotate(count=Count('anni_id'))
+    letters = letter.objects.filter(user_id=user_id, anni_id__isnull=False).values('anni_id').annotate(count=Count('anni_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
@@ -90,16 +92,14 @@ def get_all_events_cnt(request, user_uuid):
 def get_event_cnt(request, user_uuid, event_uuid):
     user_id = utils.get_user_id(user_uuid)
     event_id = utils.get_event_id(event_uuid)
-    letters = letter.objects.filter(user_id=user_id, anni_id=event_id).values(
-        'anni_id').annotate(count=Count('anni_id'))
+    letters = letter.objects.filter(user_id=user_id, anni_id=event_id).values('anni_id').annotate(count=Count('anni_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def get_birth_cnt(request, user_uuid):
     user_id = utils.get_user_id(user_uuid)
-    letters = letter.objects.filter(user_id=user_id,anni_id__isnull=True).values(
-        'anni_id').annotate(count=Count('user_id'))
+    letters = letter.objects.filter(user_id=user_id,anni_id__isnull=True).values('anni_id').annotate(count=Count('user_id'))
     serializer = LetterCountSerializer(letters, many=True)
     return Response(serializer.data)
 
@@ -134,4 +134,16 @@ def check_date(request, event_uuid):
         tmp_date = date + relativedelta(years=1)
         date_diff = tmp_date - now 
         return JsonResponse({"status": "false", "days":date_diff.days})
-    
+
+@api_view(['GET'])
+def get_all_event_info(request):
+    events = anniversary.objects.all()
+    serializer = AnniversaryInfoSerializer(events, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_user_birth_info(request, user_uuid):
+    user_id = utils.get_user_id(user_uuid)
+    events = User.objects.filter(id = user_id)
+    serializer = UserInfoSerializer(events, many=True)
+    return Response(serializer.data)
