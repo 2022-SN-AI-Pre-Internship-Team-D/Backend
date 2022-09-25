@@ -172,7 +172,7 @@ def mainpage_info(request, user_uuid):
     #변수 처리를 하여 birth_date 이렇게 했는데 왜 회색 글자가 뜨는 건지...??
     
     serializer = EventSerializer(event, many=True)
-    return Response( serializer.data ) #birth date 까지 추가해서 + uuid
+    return Response(serializer.data, user_id, event) #birth date 까지 추가해서 + uuid
     
     
 
