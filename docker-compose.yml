@@ -1,10 +1,5 @@
 version: "3"
 
-volumes:
-  mysql_data: {}
-  prometheus_data: {}
-  grafana_data: {}  
-
 services:
   # docker-compose.yml 파일이 밖에 있을 때 기준
   # frontend:
@@ -37,8 +32,11 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 20s
       retries: 10
+    networks:
+      - letterman
 
   backend:
+    container_name: djangolm
     build: ./backend
     command: >
       bash -c "python3 manage.py makemigrations &&
@@ -51,9 +49,35 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - letterman
+
+  # prometheus:
+  #   image: prom/prometheus
+  #   restart: 'no'
+  #   volumes:
+  #     - prometheus_data:/prometheus
+  #     - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  #   ports:
+  #     - 9011:9011
+  #   network_mode: host
+  
+  # grafana:
+  #   image: grafana/grafana
+  #   environment:
+  #     GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
+  #   restart: 'no'
+  #   volumes:
+  #     - grafana_data:/var/lib/grafana
+  #   ports:
+  #     - 5432:5432
+  #   depends_on:
+  #     - prometheus
+  #   network_mode: host
 
 
   prometheus:
+    container_name: prometheus
     image: prom/prometheus
     restart: unless-stopped
     ports:
@@ -69,22 +93,33 @@ services:
       - --web.console.libraries=/usr/share/prometheus/console_libraries
       - --web.console.templates=/usr/share/proemtheus/consoles
       - --web.enable-admin-api
+    networks:
+      - letterman
 
   grafana:
+    container_name: grafana
     image: grafana/grafana
     restart: unless-stopped
     ports:
-      - 3000:3000
+      - 4000:3000
     volumes:
       - ./grafana:/var/lib/grafana
     environment:
-      - GF_SECURITY_ADMIN_USER=admin # grafana 사용자 이름
-      - GF_SECURITY_ADMIN_PASSWORD=admin # grafana 사용자 비밀번호
-      - GF_USERS_ALLOW_SIGN_UP=false
+      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
+      # - GF_SECURITY_ADMIN_USER=admin # grafana 사용자 이름
+      # - GF_SECURITY_ADMIN_PASSWORD=admin # grafana 사용자 비밀번호
+      # - GF_USERS_ALLOW_SIGN_UP=false
     depends_on:
       - prometheus
-    network_mode: host
+    networks:
+      - letterman
 
-  # volumes:
-  #   prometheus_data: {}
-  #   grafana_data: {}  
+        
+networks:
+  letterman:
+    driver: bridge
+
+volumes:
+  mysql_data: {}
+  prometheus_data: {}
+  grafana_data: {}  

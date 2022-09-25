@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include, re_path
+# from django.conf.urls import include, path
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -26,3 +27,5 @@ urlpatterns = [
     re_path(r'^swagger/$', schema_view_v1.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view_v1.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
+
+urlpatterns.append(path('', include('django_prometheus.urls')))
