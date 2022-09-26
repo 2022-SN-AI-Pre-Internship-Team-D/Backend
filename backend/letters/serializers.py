@@ -39,7 +39,6 @@ class EventSerializer(serializers.Serializer):
     def get_name(self, model_instance):
         return model_instance.event_name
     def get_date(self, model_instance):
-<<<<<<< HEAD
         return model_instance.event_date
     
    
@@ -48,12 +47,6 @@ class EventSerializer(serializers.Serializer):
     # def get_user_uuid(self, model_instance):
     #     return model_instance['user_uuid']
 
-=======
-        return model_instance['event_date']
-    def get_user_uuid(self, model_instance):
-        return model_instance['user_uuid']
-    
->>>>>>> a41944474883f2fde4e657e901e87f38d9bef641
         #밑에거는 또같이
     
 #변수에서 필드 이름은 models.py참고 / 
