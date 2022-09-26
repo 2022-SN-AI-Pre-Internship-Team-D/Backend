@@ -77,7 +77,6 @@ services:
     image: grafana/grafana
     restart: unless-stopped
     ports:
-    # 근데 프론트가 3000번으로 띄워지니까 수정해보자!
       - 4000:3000
     volumes:
       - ./grafana:/var/lib/grafana
