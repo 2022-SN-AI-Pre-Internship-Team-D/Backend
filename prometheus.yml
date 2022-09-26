@@ -13,10 +13,10 @@ scrape_configs:
         # - 'localhost:8080'
       # # ['localhost:8080', 'localhost:3306']
         # - docker.host.internal:8080
-        - djangolm:8080
+        # - djangolm:8080
         # - 127.0.0.1:8080
         # - mysqldb:3306
-        - docker.for.mac.localhost:8080
+        # - docker.for.mac.localhost:8080
         - host.docker.internal:8080
         # - docker.for.mac.localhost:3306
         # - host.docker.internal:3306
