@@ -146,8 +146,20 @@ def check_date(request, event_uuid):
 #경로 / 객체 404
 #user_uuid 추가
 #기념일 테이블에서 모든 정보 가져오기
+<<<<<<< HEAD
 #/@api_view(['GET'])
 #/def mainpage_info(request, user_uuid): 
+=======
+@api_view(['GET'])
+def mainpage_info(request, user_uuid): 
+    ## view랑 serializer 관계를 알고, serializer를 활용한 코드를 작성하셔야합니다
+    ## serializer에 어떤 값을 넣고 그 값이 ser~를 통해서 우리가 원하는 속성들만 return 될 수 있도록 해주니
+    ## 저희는 모든 이벤트 애들을 다 저장해서 그 애들의 이름,날짜,uuid만 얻으면 되니까
+    ## 변수 = 기념일테이블.objects.all()
+    ## 변수2 = eventserial~(변수, many=true)
+    ## return response(변수2.data)
+    ## 이렇게 진행하시면 됩니다!
+>>>>>>> a41944474883f2fde4e657e901e87f38d9bef641
 
     #이 부분 추가이유
     # event = event.objects.filter(
