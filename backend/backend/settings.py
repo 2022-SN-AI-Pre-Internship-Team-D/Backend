@@ -65,7 +65,9 @@ INSTALLED_APPS = [
     'users',
     'letters',
     #s3 bucket
-    'storages'
+    'storages',
+    #Monitoring
+    'django_prometheus'
 ]
 
 AUTH_USER_MODEL = 'users.User' 
@@ -92,9 +94,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #Monitoring
+    'django_prometheus.middleware.PrometheusBeforeMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware' 
 ]
 
 ROOT_URLCONF = 'backend.urls'
+# ROOT_URLCONF = "graphite.urls_prometheus_wrapper"
 
 TEMPLATES = [
     {
