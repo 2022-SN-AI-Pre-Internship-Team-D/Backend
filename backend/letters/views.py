@@ -146,8 +146,8 @@ def check_date(request, event_uuid):
 #경로 / 객체 404
 #user_uuid 추가
 #기념일 테이블에서 모든 정보 가져오기
-@api_view(['GET'])
-def mainpage_info(request, user_uuid): 
+#/@api_view(['GET'])
+#/def mainpage_info(request, user_uuid): 
 
     #이 부분 추가이유
     # event = event.objects.filter(
@@ -156,23 +156,23 @@ def mainpage_info(request, user_uuid):
     #user 부분에서 생일 날짜와 uuid 데이터 가지고 오기
 
     #user_id = utils.get_event_id(user_uuid) #위와 같을 수도; 꼭 필요한지
-    print("User.get.object")
+#/    print("User.get.object")
 
-    user_id = get_object_or_404(User, uuid = user_uuid )
+#/    user_id = get_object_or_404(User, uuid = user_uuid )
 
-    birth_date = User.objects.get(id=user_id).birth 
+#/    birth_date = User.objects.get(id=user_id).birth 
 
     #ERD 의 anniversary 테이블에서 모든 정보 가지고 오기
     #event_id = utils.get_event_id(event_uuid)
 
     #event = anniversary.objects.all() #user uuid 
-    print("Event.get.object")
-    event = get_object_or_404(anniversary, user_id=user_id)
+#/    print("Event.get.object")
+#/    event = get_object_or_404(anniversary, user_id=user_id)
 
     #변수 처리를 하여 birth_date 이렇게 했는데 왜 회색 글자가 뜨는 건지...??
     
-    serializer = EventSerializer(event, many=True)
-    return Response(serializer.data, user_id, event) #birth date 까지 추가해서 + uuid
+#/    serializer = EventSerializer(event, many=True)
+#/    return Response(serializer.data, user_id, event) #birth date 까지 추가해서 + uuid
     
     
 
@@ -202,3 +202,11 @@ def mainpage_info(request, user_uuid):
             
         # } 
         # )
+#event table + user table ? 
+@api_view(['GET'])
+def mainpage_info(request,user_uuid):
+    events = anniversary.objects.all()
+    serializer = EventSerializer(events, many=True)
+    #user_id = utils.get_event_id(user_uuid)
+
+    return Response(serializer.data)

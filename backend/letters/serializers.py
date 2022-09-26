@@ -33,13 +33,17 @@ class EventSerializer(serializers.Serializer):
         fields = '__all__'
     
     def get_uuid(self, model_instance):
-        return model_instance['event_uuid']
+        return model_instance.event_uuid
     def get_name(self, model_instance):
-        return model_instance['event_name']
+        return model_instance.event_name
     def get_date(self, model_instance):
-        return model_instance['event_date']
-    def get_user_uuid(self, model_instance):
-        return model_instance['user_uuid']
+        return model_instance.event_date
+    
+   
+
+#이부분은 유저 테이블에
+    # def get_user_uuid(self, model_instance):
+    #     return model_instance['user_uuid']
 
         #밑에거는 또같이
     
