@@ -18,17 +18,21 @@ pymysql.install_as_MySQLdb()
 
 from datetime import timedelta
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
+is_dev = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(
-    env_file=os.path.join(BASE_DIR, '.env')
-)
+env = environ.Env(DEBUG=(bool, True))
+
+if is_dev:
+    environ.Env.read_env(
+        env_file=os.path.join(BASE_DIR, 'dev.env')
+    )
+else:
+    environ.Env.read_env(
+        env_file=os.path.join(BASE_DIR, '.env')
+    )
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -125,17 +129,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # engine: mysql
-        'NAME' : 'lmdb', # DB Name
-        'USER' : 'admin', # DB User
-        'PASSWORD' : 'admin-letterman', # Password
-        'HOST': 'letterman.coqequ5e3jft.ap-northeast-2.rds.amazonaws.com', # 생성한 데이터베이스 엔드포인트
-        'PORT': '3307', # 데이터베이스 포트
-        'OPTIONS':{
-            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
-        }
-    }
+    'default': env.db(),
 }
 
 
