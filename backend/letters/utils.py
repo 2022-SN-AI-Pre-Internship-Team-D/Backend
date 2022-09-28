@@ -27,7 +27,7 @@ def get_file_url(data, uuid, input_type="file"):
     if input_type == "file":
         type = "jpg"
     elif input_type == "media":
-        type = "mp3"
+        type = "wav"
     s3_client.put_object(Body=data, Bucket=AWS_STORAGE_BUCKET_NAME, Key=uuid + "." + type)
     url = "http://"+AWS_STORAGE_BUCKET_NAME+".s3.ap-northeast-2.amazonaws.com/" + \
                 uuid + "." + type
