@@ -125,7 +125,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # engine: mysql
+        'NAME' : 'lmdb', # DB Name
+        'USER' : 'admin', # DB User
+        'PASSWORD' : 'admin-letterman', # Password
+        'HOST': 'letterman.coqequ5e3jft.ap-northeast-2.rds.amazonaws.com', # 생성한 데이터베이스 엔드포인트
+        'PORT': '3307', # 데이터베이스 포트
+        'OPTIONS':{
+            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
+    }
 }
 
 
